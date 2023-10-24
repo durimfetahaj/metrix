@@ -1,82 +1,98 @@
 "use client";
 
 // import { Transition } from "@headlessui/react";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 // import { Icons } from "@/components/Icons";
 // import Search from "@/components/Search";
 // import { MenuItem } from "@/types/types";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import menu from "./menu";
+import menu, { MenuItem } from "./menu";
+import { Icons } from "@/components/Icons";
+import { Dialog, Transition } from "@headlessui/react";
+import Search from "@/components/Search";
 
 export default function MobileMenu() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isShowing, setIsShowing] = useState(false);
-  const closeMobileMenu = () => setIsShowing(false);
-  const openMobileMenu = () => setIsShowing(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const openMobileMenu = () => setIsOpen(true);
+  const closeMobileMenu = () => setIsOpen(false);
 
   useEffect(() => {
-    setIsShowing(false);
+    setIsOpen(false);
   }, [pathname, searchParams]);
+
+  const openSidebar = () => {
+    setIsOpen(true);
+  };
+  const closeSidebar = () => {
+    setIsOpen(false);
+  };
 
   return (
     <>
       <button
-        className="flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white"
         onClick={openMobileMenu}
-        aria-label="Close mobile menu"
+        aria-label="Open mobile menu"
+        className="flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white md:hidden"
       >
-        {/* <Icons.mobileMenu /> */}
+        <Icons.mobileMenu />
       </button>
-      {/* <Transition show={isShowing}>
-        <Transition.Child
-          enter="transition-opacity ease-linear duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition-opacity ease-linear duration-300"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        </Transition.Child>
+      <Transition show={isOpen}>
+        <Dialog onClose={closeMobileMenu} className="relative z-50">
+          <Transition.Child
+            as={Fragment}
+            enter="transition-all ease-in-out duration-300"
+            enterFrom="opacity-0 backdrop-blur-none"
+            enterTo="opacity-100 backdrop-blur-[.5px]"
+            leave="transition-all ease-in-out duration-200"
+            leaveFrom="opacity-100 backdrop-blur-[.5px]"
+            leaveTo="opacity-0 backdrop-blur-none"
+          >
+            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+          </Transition.Child>
+          <Transition.Child
+            as={Fragment}
+            enter="transition-all ease-in-out duration-300"
+            enterFrom="translate-x-[-100%]"
+            enterTo="translate-x-0"
+            leave="transition-all ease-in-out duration-200"
+            leaveFrom="translate-x-0"
+            leaveTo="translate-x-[-100%]"
+          >
+            <Dialog.Panel className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-full flex-col bg-white pb-6 dark:bg-black">
+              <div className="p-4">
+                <button
+                  className="mb-4 flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white"
+                  onClick={closeMobileMenu}
+                  aria-label="Close mobile menu"
+                >
+                  <Icons.cross />
+                </button>
 
-        <Transition.Child
-          enter="transition ease-in-out duration-300 transform"
-          enterFrom="-translate-x-full"
-          enterTo="translate-x-0"
-          leave="transition ease-in-out duration-300 transform"
-          leaveFrom="translate-x-0"
-          leaveTo="-translate-x-full"
-          className="fixed top-0 right-0 h-full w-full z-50 bg-white"
-        >
-          <div className="p-4">
-            <button
-              className="flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white mb-4 "
-              onClick={closeMobileMenu}
-              aria-label="Close mobile menu"
-            >
-              <Icons.CrossIcon />
-            </button>
-            <Search />
-
-            {menu.length ? (
-              <ul className="flex w-full flex-col mt-4">
-                {menu.map((item: MenuItem) => (
-                  <li
-                    className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
-                    key={item.label}
-                  >
-                    <Link href={item.url} onClick={closeMobileMenu}>
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </div>
-        </Transition.Child>
-      </Transition> */}
+                <div className="mb-4 w-full">
+                  <Search />
+                </div>
+                {menu.length ? (
+                  <ul className="flex w-full flex-col">
+                    {menu.map((item: MenuItem) => (
+                      <li
+                        className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
+                        key={item.label}
+                      >
+                        <Link href={item.url} onClick={closeMobileMenu}>
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+            </Dialog.Panel>
+          </Transition.Child>
+        </Dialog>
+      </Transition>
     </>
   );
 }
