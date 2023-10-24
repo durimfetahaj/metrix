@@ -10,7 +10,7 @@ import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import UserAvatar from "./UserAvatar";
 
-const UserMenu = () => {
+const UserMenu = ({ isDashboard }: { isDashboard?: boolean }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="overflow-visible">
@@ -21,9 +21,15 @@ const UserMenu = () => {
       <div>
         <DropdownMenuContent>
           <DropdownMenuItem asChild>
-            <Link className="cursor-pointer" href="/dashboard">
-              Dashboard
-            </Link>
+            {isDashboard ? (
+              <Link className="cursor-pointer" href="/">
+                Home
+              </Link>
+            ) : (
+              <Link className="cursor-pointer" href="/dashboard">
+                Dashboard
+              </Link>
+            )}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer">

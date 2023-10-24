@@ -13,8 +13,21 @@ import menu, { MenuItem } from "./menu";
 import MobileMenu from "./mobile-menu";
 import Search from "@/components/Search";
 
-const Navbar = () => {
+const Navbar = ({ isDashboard = false }: { isDashboard?: boolean }) => {
   const { isAuthenticated } = getKindeServerSession();
+
+  if (isDashboard) {
+    return (
+      <nav className="h-20 w-full border-b dark:border-zinc-700 bg-background/75">
+        <div className="h-full w-full flex items-center justify-between px-5">
+          <p>Dashboard</p>
+          <div>
+            <UserMenu isDashboard />
+          </div>
+        </div>
+      </nav>
+    );
+  }
 
   return (
     <nav className="mb-8 sticky h-20 inset-x-0 top-0 z-30 w-full border-b dark:border-zinc-700 bg-background/75 backdrop-blur-lg transition-all">

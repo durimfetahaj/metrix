@@ -1,10 +1,29 @@
-import { Ghost, LucideProps, Menu, ShoppingCart, User, X } from "lucide-react";
+import {
+  Ghost,
+  LucideProps,
+  Menu,
+  ShoppingCart,
+  User,
+  X,
+  LayoutDashboard,
+  Folders,
+  MessageCircle,
+  Settings,
+  PanelLeftOpen,
+  PanelRightOpen,
+} from "lucide-react";
 
 export const Icons = {
   user: User,
   cross: X,
   cart: ShoppingCart,
   ghost: Ghost,
+  dashboard: LayoutDashboard,
+  inventory: Folders,
+  conversations: MessageCircle,
+  settings: Settings,
+  sidebarOpen: PanelLeftOpen,
+  sideBarClose: PanelRightOpen,
   mobileMenu: (props: LucideProps) => <Menu {...props} className="h-5 w-5" />,
   search: (props: LucideProps) => (
     <svg
