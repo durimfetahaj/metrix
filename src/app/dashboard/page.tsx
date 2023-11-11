@@ -4,20 +4,21 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const { getUser } = getKindeServerSession();
+  const { getUser, getPermission } = getKindeServerSession();
+  const role = getPermission("customer").isGranted ? "customer" : "admin";
   const user = getUser();
 
   if (!user || !user.id) redirect("/auth-callback?origin=dashboard");
 
-  const dbUser = await db.user.findFirst({
+  const dbUser = await db.profile.findFirst({
     where: {
-      id: user.id,
+      userId: user.id,
     },
   });
 
   if (!dbUser) redirect("/auth-callback?origin=dashboard");
 
-  return <Dashboard />;
+  redirect("/");
 };
 
 export default Page;

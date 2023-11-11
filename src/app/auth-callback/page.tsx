@@ -6,15 +6,12 @@ import { Loader2 } from "lucide-react";
 
 const Page = () => {
   const router = useRouter();
-
   const searchParams = useSearchParams();
   const origin = searchParams.get("origin");
-
   trpc.authCallback.useQuery(undefined, {
     onSuccess: ({ success }) => {
       if (success) {
-        // user is synced to db
-        router.push(origin ? `/${origin}` : "/dashboard");
+        // router.push("/dashboard/admin");
       }
     },
     onError: (err) => {

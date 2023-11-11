@@ -9,4 +9,31 @@ const menu = [
   { label: "Pc Builds", url: "/pc-builds" },
 ];
 
+export const dashboardNavLinks = [
+  {
+    url: "/dashboard",
+    label: "Dashboard",
+  },
+  {
+    url: "/dashboard/orders",
+    label: "Orders",
+  },
+  {
+    url: "/dashboard/customers",
+    label: "Customers",
+  },
+  {
+    url: "/dashboard/inventory",
+    label: "Inventory",
+  },
+  {
+    url: "/dashboard/conversations",
+    label: "Conversations",
+  },
+  {
+    url: "/dashboard/settings",
+    label: "Settings",
+  },
+];
+
 export default menu;

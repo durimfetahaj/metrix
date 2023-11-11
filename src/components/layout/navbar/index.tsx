@@ -9,20 +9,28 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import UserMenu from "./UserMenu";
-import menu, { MenuItem } from "./menu";
+import menu, { MenuItem, dashboardNavLinks } from "./menu";
 import MobileMenu from "./mobile-menu";
 import Search from "@/components/Search";
+import DashboardNavbar from "@/components/dashboard/Navbar";
 
-const Navbar = ({ isDashboard = false }: { isDashboard?: boolean }) => {
-  const { isAuthenticated } = getKindeServerSession();
+const Navbar = ({
+  role,
+  isDashboard,
+}: {
+  role?: string;
+  isDashboard?: boolean;
+}) => {
+  const { isAuthenticated, getPermission } = getKindeServerSession();
 
-  if (isDashboard) {
+  if (isDashboard && role && isAuthenticated()) {
     return (
       <nav className="h-20 w-full border-b dark:border-zinc-700 bg-background/75">
-        <div className="h-full w-full flex items-center justify-between px-5">
-          <p>Dashboard</p>
+        <div className=" container h-full w-full flex items-center justify-between px-5">
+          <p>Metrix.</p>
+          <DashboardNavbar role={role} />
           <div>
-            <UserMenu isDashboard />
+            <UserMenu />
           </div>
         </div>
       </nav>
