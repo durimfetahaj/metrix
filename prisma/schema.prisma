@@ -8,11 +8,17 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User {
-  id      String    @id @unique
-  email   String    @unique
-  picture String?
-  Product Product[]
+model Profile {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  name      String?
+  imageUrl  String?
+  email     String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  role      MemberRole @default(CUSTOMER)
+  Member    Member[]
+  Product   Product[]
 }
 
 model Product {
@@ -21,22 +27,39 @@ model Product {
   name        String
   quantity    String
   category    Category
-  status      Status   @default(PENDING)
+  status      Status
   price       String
   images      String[]
   stock       String
   url         String
-  createdAt   DateTime @default(now()) @map("createdAt")
-  updatedAt   DateTime @updatedAt @map("updatedAt")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   userId      String?
-  User        User?    @relation(fields: [userId], references: [id])
+  User        Profile? @relation(fields: [userId], references: [id])
 }
 
-enum Status {
-  PENDING
-  PROCESSING
+model Member {
+  id        String     @id @default(uuid())
+  role      MemberRole @default(CUSTOMER)
+  profileId String
+  profile   Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
 }
 
 enum Category {
   GADGETS
+  CLOTHING
+  HOMEDECOR
+  BEAUTY
+  BOOKS
+  TOYS
+}
+
+enum Status {
+  PUBLISHED
+  UNPUBLISHED
+}
+
+enum MemberRole {
+  ADMIN
+  CUSTOMER
 }
