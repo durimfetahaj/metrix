@@ -1,5 +1,11 @@
+import CreateCustomer from "@/components/dashboard/customer/create/create-customer";
+
 const Page = () => {
-  return <div>Customers</div>;
+  return (
+    <div>
+      <CreateCustomer />
+    </div>
+  );
 };
 
 export default Page;
