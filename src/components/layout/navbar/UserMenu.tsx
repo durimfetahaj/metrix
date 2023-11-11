@@ -6,11 +6,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/server";
+import {
+  LogoutLink,
+  getKindeServerSession,
+} from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import UserAvatar from "./UserAvatar";
 
-const UserMenu = ({ isDashboard }: { isDashboard?: boolean }) => {
+const UserMenu = () => {
+  const { getPermission } = getKindeServerSession();
+  const role = getPermission("customer").isGranted ? "customer" : "admin";
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="overflow-visible">
@@ -21,15 +27,7 @@ const UserMenu = ({ isDashboard }: { isDashboard?: boolean }) => {
       <div>
         <DropdownMenuContent>
           <DropdownMenuItem asChild>
-            {isDashboard ? (
-              <Link className="cursor-pointer" href="/">
-                Home
-              </Link>
-            ) : (
-              <Link className="cursor-pointer" href="/dashboard">
-                Dashboard
-              </Link>
-            )}
+            <Link href={`/${role}`}>Dashboard</Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer">

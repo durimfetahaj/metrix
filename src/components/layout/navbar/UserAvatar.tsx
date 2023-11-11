@@ -5,20 +5,20 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Image from "next/image";
 
 const UserAvatar = () => {
-  const { data: user } = trpc.getUser.useQuery();
+  const { data: profile } = trpc.getProfile.useQuery();
 
   return (
-    <Avatar className="h-8 w-8">
-      {user?.picture ? (
+    <Avatar className="h-10 w-10">
+      {profile?.imageUrl ? (
         <Image
           fill
-          src={user?.picture}
+          src={profile.imageUrl}
           alt="profile picture"
           referrerPolicy="no-referrer"
         />
       ) : (
         <AvatarFallback>
-          <span className="sr-only">{user?.email}</span>
+          <span className="sr-only">{profile?.email}</span>
           <Icons.user className="h-4 w-4 text-zinc-900" />
         </AvatarFallback>
       )}
