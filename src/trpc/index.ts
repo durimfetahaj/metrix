@@ -3,8 +3,8 @@ import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/db";
 import { z } from "zod";
-import { CreateCustomer } from "@/lib/validators/Customer";
 import { Conversation } from "@/lib/validators/Conversation";
+import { InventoryItem } from "@/lib/validators/Inventory";
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -75,21 +75,26 @@ export const appRouter = router({
     });
   }),
 
-  // createCustomer: privateProcedure
-  //   .input(CreateCustomer)
-  //   .query(async ({ input }) => {
-  //     const { name, email, address } = input;
+  createInventoryItem: privateProcedure
+    .input(InventoryItem)
+    .mutation(async ({ input }) => {
+      const { name, category, costPrice, sellingPrice, description, stock } =
+        input;
 
-  //     await db.customer.create({
-  //       data: {
-  //         name,
-  //         email,
-  //         address,
-  //       },
-  //     });
+      await db.product.create({
+        data: {
+          name,
+          category,
+          costPrice,
+          sellingPrice,
+          description,
+          stock,
+          status: "PUBLISHED",
+        },
+      });
 
-  //     return { success: true };
-  //   }),
+      return { success: true };
+    }),
 
   // getCustomers: privateProcedure.query(async () => {
   //   return await db.customer.findMany();

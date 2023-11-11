@@ -1,11 +1,10 @@
 "use client";
 
 import { trpc } from "@/app/_trpc/client";
-import { Ghost } from "lucide-react";
 import Link from "next/link";
+import { Icons } from "../Icons";
 import { Skeleton } from "../ui/skeleton";
 import GridTileImage from "./tile";
-import { Icons } from "../Icons";
 
 const ThreeItemGridItem = ({
   item,
@@ -26,10 +25,10 @@ const ThreeItemGridItem = ({
     >
       <Link
         className="relative block aspect-square h-full w-full  "
-        href={`/product/${item.id}`}
+        href={`/product/${item?.id}`}
       >
         <GridTileImage
-          src={item.images[0]}
+          src={item?.images[0] ? item.images[0] : "/images/dummy.png"}
           fill
           sizes={
             size === "full"
@@ -37,11 +36,11 @@ const ThreeItemGridItem = ({
               : "(min-width: 768px) 33vw, 100vw"
           }
           priority={priority}
-          alt={item.name}
+          alt={item?.name}
           label={{
             position: size === "full" ? "center" : "bottom",
-            title: item.name as string,
-            amount: item.price,
+            title: item?.name as string,
+            amount: item?.costPrice,
           }}
         />
       </Link>
@@ -52,7 +51,9 @@ const ThreeItemGridItem = ({
 const ThreeItemGrid = () => {
   const { data: products, isLoading } = trpc.getThreeProducts.useQuery();
 
-  return products && products?.length !== 0 ? (
+  console.log("products", products);
+
+  return products && products?.length !== 0 && products?.length >= 3 ? (
     <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2">
       <ThreeItemGridItem size="full" item={products[0]} priority={true} />
       <ThreeItemGridItem size="half" item={products[1]} priority={true} />

@@ -28,9 +28,11 @@ export function Carousel() {
                 alt={product.name}
                 label={{
                   title: product.name,
-                  amount: product.price,
+                  amount: product.costPrice,
                 }}
-                src={product.images[0]}
+                src={
+                  product.images[0] ? product.images[0] : "/images/dummy.png"
+                }
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
               />
