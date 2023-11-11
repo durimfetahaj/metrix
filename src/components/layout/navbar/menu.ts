@@ -11,19 +11,19 @@ const menu = [
 
 export const dashboardNavLinks = [
   {
-    url: "/dashboard",
+    url: "/admin",
     label: "Dashboard",
   },
   {
-    url: "/dashboard/orders",
+    url: "/admin/orders",
     label: "Orders",
   },
   {
-    url: "/dashboard/customers",
+    url: "/admin/customers",
     label: "Customers",
   },
   {
-    url: "/dashboard/inventory",
+    url: "/admin/inventory",
     label: "Inventory",
   },
   {
