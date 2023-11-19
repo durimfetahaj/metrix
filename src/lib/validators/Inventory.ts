@@ -20,4 +20,5 @@ export const InventoryItem = z.object({
   description: z.string({
     required_error: "Please enter a description",
   }),
+  images: z.array(z.string()),
 });

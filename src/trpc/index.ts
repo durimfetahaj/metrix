@@ -78,8 +78,15 @@ export const appRouter = router({
   createInventoryItem: privateProcedure
     .input(InventoryItem)
     .mutation(async ({ input }) => {
-      const { name, category, costPrice, sellingPrice, description, stock } =
-        input;
+      const {
+        name,
+        category,
+        costPrice,
+        sellingPrice,
+        description,
+        stock,
+        images,
+      } = input;
 
       await db.product.create({
         data: {
@@ -90,6 +97,7 @@ export const appRouter = router({
           description,
           stock,
           status: "PUBLISHED",
+          images,
         },
       });
 
