@@ -66,6 +66,14 @@ export const appRouter = router({
     return dbUser;
   }),
 
+  getProducts: publicProcedure.query(async () => {
+    return await db.product.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }),
+
   getThreeProducts: publicProcedure.query(async () => {
     return await db.product.findMany({
       take: 3,

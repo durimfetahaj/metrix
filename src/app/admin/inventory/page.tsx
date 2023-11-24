@@ -8,7 +8,8 @@ import Link from "next/link";
 import { columns } from "./columns";
 
 const Page = () => {
-  const { data: products, isLoading } = trpc.getThreeProducts.useQuery();
+  const { data: products, isLoading } = trpc.getProducts.useQuery();
+
   return (
     <div className="container h-full px-5">
       <div className="flex justify-between mb-10">
