@@ -51,8 +51,6 @@ const ThreeItemGridItem = ({
 const ThreeItemGrid = () => {
   const { data: products, isLoading } = trpc.getThreeProducts.useQuery();
 
-  console.log("products", products);
-
   return products && products?.length !== 0 && products?.length >= 3 ? (
     <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2">
       <ThreeItemGridItem size="full" item={products[0]} priority={true} />
