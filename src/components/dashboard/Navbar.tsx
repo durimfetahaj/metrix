@@ -10,7 +10,7 @@ const DashboardNavbar = ({ role }: { role: string }) => {
         <li>
           <Link
             className="underline-offset-4 hover:underline text-neutral-400 hover:text-neutral-300"
-            href="/dashboard/orders"
+            href="/customer/orders"
           >
             Orders
           </Link>
@@ -18,7 +18,7 @@ const DashboardNavbar = ({ role }: { role: string }) => {
         <li>
           <Link
             className="underline-offset-4 hover:underline text-neutral-400 hover:text-neutral-300"
-            href="/dashboard/settings"
+            href="/customer/settings"
           >
             Settings
           </Link>

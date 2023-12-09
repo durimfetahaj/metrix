@@ -11,8 +11,8 @@ const menu = [
 
 export const dashboardNavLinks = [
   {
-    url: "/admin",
-    label: "Dashboard",
+    url: "/",
+    label: "Home",
   },
   {
     url: "/admin/orders",
@@ -27,11 +27,11 @@ export const dashboardNavLinks = [
     label: "Inventory",
   },
   {
-    url: "/dashboard/conversations",
+    url: "/admin/conversations",
     label: "Conversations",
   },
   {
-    url: "/dashboard/settings",
+    url: "/admin/settings",
     label: "Settings",
   },
 ];

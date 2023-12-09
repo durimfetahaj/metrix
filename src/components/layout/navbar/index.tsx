@@ -9,7 +9,7 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import UserMenu from "./UserMenu";
-import menu, { MenuItem, dashboardNavLinks } from "./menu";
+import menu, { MenuItem } from "./menu";
 import MobileMenu from "./mobile-menu";
 import Search from "@/components/Search";
 import DashboardNavbar from "@/components/dashboard/Navbar";
@@ -21,7 +21,7 @@ const Navbar = ({
   role?: string;
   isDashboard?: boolean;
 }) => {
-  const { isAuthenticated, getPermission } = getKindeServerSession();
+  const { isAuthenticated } = getKindeServerSession();
 
   if (isDashboard && role && isAuthenticated()) {
     return (
