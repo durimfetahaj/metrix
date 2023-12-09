@@ -2,8 +2,6 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/db";
-import { z } from "zod";
-import { Conversation } from "@/lib/validators/Conversation";
 import { InventoryItem } from "@/lib/validators/Inventory";
 
 export const appRouter = router({
