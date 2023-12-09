@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Profile {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  name      String?
+  imageUrl  String?
+  email     String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  role      MemberRole @default(CUSTOMER)
+  Member    Member[]
+  Product   Product[]
+}
+
+model Product {
+  id           String   @id @default(cuid())
+  description  String
+  name         String
+  category     Category
+  status       Status
+  images       String[]
+  stock        String
+  url          String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  userId       String?
+  costPrice    String
+  sellingPrice String
+  User         Profile? @relation(fields: [userId], references: [id])
+}
+
+model Member {
+  id        String     @id @default(uuid())
+  role      MemberRole @default(CUSTOMER)
+  profileId String
+  profile   Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
+enum Category {
+  GADGETS
+  CLOTHING
+  HOMEDECOR
+  BEAUTY
+  BOOKS
+  TOYS
+}
+
+enum Status {
+  PUBLISHED
+  UNPUBLISHED
+}
+
+enum MemberRole {
+  ADMIN
+  CUSTOMER
+}
