@@ -31,6 +31,7 @@
     "@trpc/react-query": "^10.40.0",
     "@trpc/server": "^10.40.0",
     "@uploadthing/react": "^6.0.0",
+    "@vercel/speed-insights": "^1.0.1",
     "add": "^2.0.6",
     "badge": "^1.0.3",
     "class-variance-authority": "^0.7.0",
