@@ -18,7 +18,7 @@ const GridTileImage = ({
     <div className="group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border hover:border-primary border-zinc-800">
       {props.src ? (
         <Image
-          className={cn("relative h-full w-full object-contain", {
+          className={cn("relative h-full w-full object-contain p-6", {
             "transition duration-300 ease-in-out group-hover:scale-105":
               isInteractive,
           })}
