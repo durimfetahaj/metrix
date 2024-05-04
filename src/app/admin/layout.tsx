@@ -1,4 +1,3 @@
-import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/layout/navbar";
 
 export default function AdminLayout({
@@ -8,13 +7,11 @@ export default function AdminLayout({
 }) {
   return (
     <section>
-      <div className="flex">
-        {/* <Sidebar /> */}
-        <div className="w-full">
-          <Navbar role="admin" isDashboard />
-          <div className="py-10 px-5 h-[calc(100%-80px)]">{children}</div>
-        </div>
-      </div>
+      {/* <Sidebar /> */}
+      {/* <div className="w-full"> */}
+      <Navbar role="admin" isDashboard />
+      <div className="py-10 px-5 text-center bg-background">{children}</div>
+      {/* </div> */}
     </section>
   );
 }

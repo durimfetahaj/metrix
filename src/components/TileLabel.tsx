@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import Price from "./Price";
 
 const TileLabel = ({
   title,
@@ -22,9 +23,7 @@ const TileLabel = ({
         <h3 className="mr-4 line-clamp-2 flex-grow pl-2 leading-none tracking-tight">
           {title}
         </h3>
-        <div className="flex-none rounded-full bg-green-500 p-2">
-          €{amount} EUR
-        </div>
+        <Price amount={amount} />
       </div>
     </div>
   );

@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [{ hostname: "utfs.io" }, { hostname: "i.ibb.co" }],
+    remotePatterns: [
+      { hostname: "utfs.io" },
+      { hostname: "lh3.googleusercontent.com" },
+    ],
   },
 };
 

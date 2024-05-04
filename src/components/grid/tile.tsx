@@ -15,10 +15,10 @@ const GridTileImage = ({
   };
 } & React.ComponentProps<typeof Image>) => {
   return (
-    <div className="group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border hover:border-primary border-zinc-800">
+    <div className="group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border hover:border-primary border-zinc-800 bg-black">
       {props.src ? (
         <Image
-          className={cn("relative h-full w-full object-contain p-6", {
+          className={cn("relative h-full w-full object-scale-down p-6", {
             "transition duration-300 ease-in-out group-hover:scale-105":
               isInteractive,
           })}

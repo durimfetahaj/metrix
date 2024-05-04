@@ -52,7 +52,7 @@ export const columns: ColumnDef<Product>[] = [
       new Intl.NumberFormat("de-DE", {
         style: "currency",
         currency: "EUR",
-      }).format(Number(row.original.sellingPrice)),
+      }).format(parseFloat(row.original.price.replace(/,/g, ""))),
   },
   {
     accessorKey: "stock",
@@ -67,7 +67,10 @@ export const columns: ColumnDef<Product>[] = [
       new Intl.NumberFormat("de-DE", {
         style: "currency",
         currency: "EUR",
-      }).format(Number(row.original.stock) * Number(row.original.sellingPrice)),
+      }).format(
+        Number(row.original.stock) *
+          parseFloat(row.original.price.replace(/,/g, ""))
+      ),
   },
   {
     accessorKey: "status",
