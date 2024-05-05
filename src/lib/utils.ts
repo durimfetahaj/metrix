@@ -10,3 +10,16 @@ export function absoluteUrl(path: string) {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function CurrencyFormatter({
+  amount,
+  currency = "EUR",
+}: {
+  amount: string;
+  currency?: string;
+}) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+  }).format(parseFloat(amount.replace(/,/g, "")));
+}

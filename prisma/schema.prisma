@@ -22,20 +22,29 @@ model Profile {
 }
 
 model Product {
-  id           String   @id @default(cuid())
-  description  String
-  name         String
-  category     Category
-  status       Status
-  images       String[]
-  stock        String
-  url          String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  userId       String?
-  costPrice    String
-  sellingPrice String
-  User         Profile? @relation(fields: [userId], references: [id])
+  id          String    @id @default(cuid())
+  description String
+  name        String
+  category    Category
+  status      Status
+  images      String[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  userId      String?
+  price       String
+  stock       String
+  User        Profile?  @relation(fields: [userId], references: [id])
+  variants    Variant[]
+}
+
+model Variant {
+  id        String    @id @default(cuid())
+  productId String
+  value     String
+  stock     Int
+  price     String
+  attribute Attribute
+  product   Product   @relation(fields: [productId], references: [id])
 }
 
 model Member {
@@ -43,6 +52,11 @@ model Member {
   role      MemberRole @default(CUSTOMER)
   profileId String
   profile   Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
+enum Attribute {
+  Color
+  Storage
 }
 
 enum Category {

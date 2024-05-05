@@ -1,10 +1,10 @@
 import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +25,7 @@ export default function RootLayout({
           className={cn("min-h-screen font-sans antialiased", inter.className)}
         >
           <Toaster />
-          <main>{children}</main>
+          <main className="bg-neutral-900">{children}</main>
           <SpeedInsights />
         </body>
       </Providers>

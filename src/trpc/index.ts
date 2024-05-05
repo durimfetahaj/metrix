@@ -3,6 +3,7 @@ import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/db";
 import { InventoryItem } from "@/lib/validators/Inventory";
+import { Product } from "@/lib/validators/Product";
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -81,27 +82,46 @@ export const appRouter = router({
     });
   }),
 
+  getProductById: publicProcedure.input(Product).query(async ({ input }) => {
+    try {
+      const { id } = input;
+
+      // Fetch the product by ID from the database, including variants
+      const product = await db.product.findUnique({
+        where: {
+          id,
+        },
+        // include: {
+        //   Attributes: true,
+        // },
+      });
+
+      if (!product) {
+        // If the product is not found, return a failure response
+        return { success: false, error: "Product not found" };
+      }
+
+      // Return the fetched product
+      return product;
+    } catch (error) {
+      // Handle errors and return a failure response
+      console.error("Error fetching product by ID:", error);
+      return { success: false, error: "Failed to fetch product by ID" };
+    }
+  }),
+
   createInventoryItem: privateProcedure
     .input(InventoryItem)
     .mutation(async ({ input }) => {
-      const {
-        name,
-        category,
-        costPrice,
-        sellingPrice,
-        description,
-        stock,
-        images,
-      } = input;
+      const { name, category, price, description, stock, images } = input;
 
-      await db.product.create({
+      const newProduct = await db.product.create({
         data: {
           name,
           category,
-          costPrice,
-          sellingPrice,
-          description,
+          price,
           stock,
+          description,
           status: "PUBLISHED",
           images,
         },

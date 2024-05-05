@@ -8,7 +8,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -53,6 +52,7 @@ const CreateInventoryItem = () => {
       ...values,
       images: imagesUploaded,
     };
+
     createItem(data);
   }
 
@@ -108,42 +108,19 @@ const CreateInventoryItem = () => {
               )}
             />
 
-            <div className="flex gap-2.5">
-              <FormField
-                control={form.control}
-                name="sellingPrice"
-                render={({ field }) => (
-                  <FormItem className="w-1/2">
-                    <FormControl>
-                      <Input
-                        placeholder="Selling Price"
-                        type="number"
-                        {...field}
-                      />
-                    </FormControl>
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem className="">
+                  <FormControl>
+                    <Input {...field} placeholder="Price" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="costPrice"
-                render={({ field }) => (
-                  <FormItem className="w-1/2">
-                    <FormControl>
-                      <Input
-                        placeholder="Cost Price"
-                        type="number"
-                        {...field}
-                      />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
             <FormField
               control={form.control}
               name="stock"
@@ -157,6 +134,7 @@ const CreateInventoryItem = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="description"

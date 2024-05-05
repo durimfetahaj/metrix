@@ -1,4 +1,4 @@
-import { Category } from "@prisma/client";
+import { Attribute, Category } from "@prisma/client";
 import z from "zod";
 
 export const InventoryItem = z.object({
@@ -7,12 +7,9 @@ export const InventoryItem = z.object({
   }),
   category: z.nativeEnum(Category, {
     required_error: "Please Select a category",
-  }), // Assuming Category is an enum
-  sellingPrice: z.string({
-    required_error: "Please enter a selling price",
   }),
-  costPrice: z.string({
-    required_error: "Please enter a cost price",
+  price: z.string({
+    required_error: "Please enter a selling price",
   }),
   stock: z.string({
     required_error: "Please enter a stock amount",
