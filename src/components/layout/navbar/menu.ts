@@ -15,23 +15,23 @@ export const dashboardNavLinks = [
     label: "Home",
   },
   {
-    url: "/admin/orders",
+    url: "/dashboard/orders",
     label: "Orders",
   },
   {
-    url: "/admin/customers",
+    url: "/dashboard/customers",
     label: "Customers",
   },
   {
-    url: "/admin/inventory",
+    url: "/dashboard/inventory",
     label: "Inventory",
   },
   {
-    url: "/admin/conversations",
+    url: "/dashboard/conversations",
     label: "Conversations",
   },
   {
-    url: "/admin/settings",
+    url: "/dashboard/settings",
     label: "Settings",
   },
 ];

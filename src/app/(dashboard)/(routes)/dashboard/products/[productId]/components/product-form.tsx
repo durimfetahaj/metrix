@@ -1,5 +1,6 @@
 "use client";
 
+import { createProduct } from "@/actions/products/create-product";
 import { UploadImage } from "@/components/UploadImage";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,31 +25,34 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { InventoryItem } from "@/lib/validators/Inventory";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Category, Product } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
-const CreateInventoryItem = () => {
+interface ProductFormProps {
+  initialData: Product | null;
+  categories: Category[];
+}
+
+const ProductForm = ({ initialData, categories }: ProductFormProps) => {
   const [imagesUploaded, setImagesUploaded] = useState<any[]>([]);
   const { toast } = useToast();
   const router = useRouter();
-  const action = "";
+  const title = initialData ? "Edit Category" : "Create Category";
+  const action = initialData ? "Save Changes" : "Create";
+  const toastMessage = initialData
+    ? "Category updated successfully"
+    : "Category created successfully";
 
-  // const { mutate: createItem } = trpc.createProduct.useMutation({
-  //   onSuccess: () => {
-  //     console.log("Inventory item created successfully");
-  //     toast({
-  //       title: "Inventory item created successfully",
-  //     });
-  //     router.push("/dashboard/inventory");
-  //   },
-  // });
-
-  // const { data: categories } = trpc.getCategories.useQuery();
+  console.log({ initialData });
 
   const form = useForm<z.infer<typeof InventoryItem>>({
     resolver: zodResolver(InventoryItem),
+    defaultValues: {
+      ...initialData,
+    },
   });
 
   function onSubmit(values: z.infer<typeof InventoryItem>) {
@@ -57,6 +61,20 @@ const CreateInventoryItem = () => {
       ...values,
       images: imagesUploaded,
     };
+
+    if (initialData) {
+      // Update product
+    } else {
+      createProduct(data)
+        .then((product) => {
+          if (product?.success) {
+            router.push("/dashboard/products");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
 
     // createItem(data);
   }
@@ -101,11 +119,11 @@ const CreateInventoryItem = () => {
                     </FormControl>
                     <SelectContent>
                       <SelectGroup>
-                        {/* {categories?.map((category) => (
+                        {categories?.map((category) => (
                           <SelectItem value={category.id}>
                             {category.name}
                           </SelectItem>
-                        ))} */}
+                        ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -230,4 +248,4 @@ const CreateInventoryItem = () => {
   );
 };
 
-export default CreateInventoryItem;
+export default ProductForm;

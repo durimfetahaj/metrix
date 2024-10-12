@@ -1,9 +1,19 @@
 import React from "react";
 
-type Props = {};
+import { Products } from "@/components/Products";
 
-const page = (props: Props) => {
-  return <div>page</div>;
+interface SearchPageProps {
+  searchParams: {
+    q: string;
+  };
+}
+
+const SearchPage: React.FC<SearchPageProps> = ({ searchParams }) => {
+  return (
+    <div>
+      <Products searchParams={searchParams} />
+    </div>
+  );
 };
 
-export default page;
+export default SearchPage;

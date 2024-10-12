@@ -8,72 +8,36 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Profile {
-  id        String     @id @default(cuid())
-  userId    String     @unique
+model User {
+  id        String    @id @default(cuid())
+  userId    String    @unique
   name      String?
   imageUrl  String?
-  email     String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  role      MemberRole @default(CUSTOMER)
-  Member    Member[]
-  Product   Product[]
+  email     String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
 }
 
 model Product {
   id          String    @id @default(cuid())
   description String
   name        String
-  category    Category
-  status      Status
   images      String[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  userId      String?
   price       String
   stock       String
-  User        Profile?  @relation(fields: [userId], references: [id])
-  variants    Variant[]
+  userId      String?
+  categoryId  String?
+  Category    Category? @relation(fields: [categoryId], references: [id])
+  user        User?     @relation(fields: [userId], references: [id])
 }
 
-model Variant {
+model Category {
   id        String    @id @default(cuid())
-  productId String
-  value     String
-  stock     Int
-  price     String
-  attribute Attribute
-  product   Product   @relation(fields: [productId], references: [id])
-}
-
-model Member {
-  id        String     @id @default(uuid())
-  role      MemberRole @default(CUSTOMER)
-  profileId String
-  profile   Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
-}
-
-enum Attribute {
-  Color
-  Storage
-}
-
-enum Category {
-  GADGETS
-  CLOTHING
-  HOMEDECOR
-  BEAUTY
-  BOOKS
-  TOYS
-}
-
-enum Status {
-  PUBLISHED
-  UNPUBLISHED
-}
-
-enum MemberRole {
-  ADMIN
-  CUSTOMER
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
 }

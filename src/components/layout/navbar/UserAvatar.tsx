@@ -1,11 +1,11 @@
-"use client";
+import { getUser } from "@/actions/user/get-user";
 import { trpc } from "@/app/_trpc/client";
 import { Icons } from "@/components/Icons";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Image from "next/image";
 
-const UserAvatar = () => {
-  const { data: profile } = trpc.getProfile.useQuery();
+const UserAvatar = async () => {
+  const profile = await getUser();
 
   return (
     <Avatar className="h-10 w-10">

@@ -1,15 +1,12 @@
-"use client";
-
-import { trpc } from "@/app/_trpc/client";
 import Link from "next/link";
 import GridTileImage from "./grid/tile";
+import { getThreeProducts } from "@/actions/products/get-three-products";
 
-export function Carousel() {
-  const { data: products } = trpc.getThreeProducts.useQuery();
+export async function Carousel() {
+  const products = await getThreeProducts();
 
   if (!products?.length || products.length < 3) return null;
 
-  // Purposefully duplicating products to make the carousel loop and not run out of products on wide screens.
   const carouselProducts = [...products, ...products, ...products];
 
   return (
