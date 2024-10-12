@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Icons } from "../Icons";
 import { Skeleton } from "../ui/skeleton";
@@ -46,10 +48,13 @@ const ThreeItemGridItem = ({
   );
 };
 
-const ThreeItemGrid = async () => {
-  const products = await getThreeProducts();
+const ThreeItemGrid = () => {
+  // const { data: products, isLoading } = trpc.getThreeProducts.useQuery();
 
-  return products && products?.length !== 0 && products?.length >= 3 ? (
+  const products = [{}];
+  const isLoading = false;
+
+  return products?.length !== 0 && products?.length >= 3 ? (
     <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 w-full ">
       <ThreeItemGridItem size="full" item={products[0]} priority={true} />
       <ThreeItemGridItem size="half" item={products[1]} priority={true} />

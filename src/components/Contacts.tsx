@@ -1,6 +1,5 @@
 "use client";
 
-import { trpc } from "@/app/_trpc/client";
 import ContactCard from "./ContactCard";
 import { Input } from "./ui/input";
 

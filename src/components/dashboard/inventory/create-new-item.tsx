@@ -35,17 +35,15 @@ const CreateInventoryItem = () => {
   const router = useRouter();
   const action = "";
 
-  // const { mutate: createItem } = trpc.createProduct.useMutation({
+  // const { mutate: createItem } = trpc.createInventoryItem.useMutation({
   //   onSuccess: () => {
   //     console.log("Inventory item created successfully");
   //     toast({
   //       title: "Inventory item created successfully",
   //     });
-  //     router.push("/dashboard/inventory");
+  //     router.push("/admin/inventory");
   //   },
   // });
-
-  // const { data: categories } = trpc.getCategories.useQuery();
 
   const form = useForm<z.infer<typeof InventoryItem>>({
     resolver: zodResolver(InventoryItem),

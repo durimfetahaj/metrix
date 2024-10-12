@@ -1,4 +1,3 @@
-import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -25,7 +24,7 @@ export default function RootLayout({
         className={cn("min-h-screen font-sans antialiased", inter.className)}
       >
         <Toaster />
-        <main>{children}</main>
+        <main className="bg-neutral-900">{children}</main>
         <SpeedInsights />
       </body>
     </html>
