@@ -1,16 +1,13 @@
 "use client";
-
-// import { Transition } from "@headlessui/react";
+import React from "react";
 import { Fragment, useEffect, useState } from "react";
-// import { Icons } from "@/components/Icons";
-// import Search from "@/components/Search";
-// import { MenuItem } from "@/types/types";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import menu, { MenuItem } from "./menu";
+import menu from "./menu";
 import { Icons } from "@/components/Icons";
 import { Dialog, Transition } from "@headlessui/react";
 import Search from "@/components/Search";
+import { MenuItem } from "@/types";
 
 export default function MobileMenu() {
   const pathname = usePathname();

@@ -1,10 +1,8 @@
-"use client";
-
-import { trpc } from "@/app/_trpc/client";
 import Link from "next/link";
 import { Icons } from "../Icons";
 import { Skeleton } from "../ui/skeleton";
 import GridTileImage from "./tile";
+import { getThreeProducts } from "@/actions/products/get-three-products";
 
 const ThreeItemGridItem = ({
   item,
@@ -25,8 +23,7 @@ const ThreeItemGridItem = ({
     >
       <Link
         className="relative block aspect-square h-full w-full"
-        // href={`/product/${item?.id}`}
-        href=""
+        href={`/product/${item?.id}`}
       >
         <GridTileImage
           src={item?.images[0] ? item.images[0] : "/images/dummy.png"}
@@ -49,20 +46,14 @@ const ThreeItemGridItem = ({
   );
 };
 
-const ThreeItemGrid = () => {
-  const { data: products, isLoading } = trpc.getThreeProducts.useQuery();
+const ThreeItemGrid = async () => {
+  const products = await getThreeProducts();
 
   return products && products?.length !== 0 && products?.length >= 3 ? (
     <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 w-full ">
       <ThreeItemGridItem size="full" item={products[0]} priority={true} />
       <ThreeItemGridItem size="half" item={products[1]} priority={true} />
       <ThreeItemGridItem size="half" item={products[2]} />
-    </section>
-  ) : isLoading ? (
-    <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 mt-10  w-full ">
-      <Skeleton className="aspect-square md:col-span-4 md:row-span-2 (min-width: 768px) 66vw, 100vw" />
-      <Skeleton className=" aspect-square md:col-span-2 md:row-span-1 (min-width: 768px) 33vw, 100vw" />
-      <Skeleton className=" aspect-square md:col-span-2 md:row-span-1 (min-width: 768px) 33vw, 100vw" />
     </section>
   ) : (
     <div className="mt-16 flex flex-col items-center gap-2">

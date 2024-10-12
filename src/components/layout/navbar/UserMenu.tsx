@@ -1,4 +1,11 @@
-import { Button } from "@/components/ui/button";
+import React from "react";
+import Link from "next/link";
+
+import {
+  LogoutLink,
+  getKindeServerSession,
+} from "@kinde-oss/kinde-auth-nextjs/server";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,14 +13,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  LogoutLink,
-  getKindeServerSession,
-} from "@kinde-oss/kinde-auth-nextjs/server";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
+
 import UserAvatar from "./UserAvatar";
 
-const UserMenu = () => {
+const UserMenu = ({ isDashboard = false }: { isDashboard?: boolean }) => {
   const { getPermission } = getKindeServerSession();
   const role = getPermission("customer").isGranted ? "customer" : "admin";
 
@@ -26,10 +30,14 @@ const UserMenu = () => {
       </DropdownMenuTrigger>
       <div>
         <DropdownMenuContent>
-          <DropdownMenuItem asChild>
-            <Link href={`/${role}`}>Dashboard</Link>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
+          {role === "admin" && !isDashboard && (
+            <>
+              <DropdownMenuItem asChild>
+                <Link href={`/dashboard`}>Dashboard</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+            </>
+          )}
           <DropdownMenuItem className="cursor-pointer">
             <LogoutLink>Log out</LogoutLink>
           </DropdownMenuItem>

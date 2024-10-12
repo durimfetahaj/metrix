@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import MainNavbar from "@/components/main-navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +21,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <Providers>
-        <body
-          className={cn("min-h-screen font-sans antialiased", inter.className)}
-        >
-          <Toaster />
-          <main className="bg-neutral-900">{children}</main>
-          <SpeedInsights />
-        </body>
-      </Providers>
+      <body
+        className={cn("min-h-screen font-sans antialiased", inter.className)}
+      >
+        <Toaster />
+        <main>{children}</main>
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
