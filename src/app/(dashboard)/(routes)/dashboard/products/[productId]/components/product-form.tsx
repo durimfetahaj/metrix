@@ -1,6 +1,7 @@
 "use client";
 
 import { createProduct } from "@/actions/products/create-product";
+import { updateProduct } from "@/actions/products/update-product";
 import { UploadImage } from "@/components/UploadImage";
 import { Button } from "@/components/ui/button";
 import {
@@ -63,12 +64,22 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
     };
 
     if (initialData) {
-      // Update product
+      updateProduct(initialData)
+        .then((updatedProduct) => {
+          if (updatedProduct?.success) {
+            router.push("/dashboard/products");
+            toast({ title: toastMessage });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } else {
       createProduct(data)
         .then((product) => {
           if (product?.success) {
             router.push("/dashboard/products");
+            toast({ title: toastMessage });
           }
         })
         .catch((err) => {
