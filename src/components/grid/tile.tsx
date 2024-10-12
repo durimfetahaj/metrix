@@ -24,6 +24,7 @@ const GridTileImage = ({
           })}
           {...props}
           quality={100}
+          alt={label?.title || "product-img"}
         />
       ) : null}
       {label ? (
