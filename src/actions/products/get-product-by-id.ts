@@ -1,3 +1,5 @@
+"use server";
+
 import { db } from "@/db";
 
 interface GetProductByIdProps {
@@ -13,7 +15,7 @@ export const getProductById = async ({ id }: GetProductByIdProps) => {
     });
 
     if (!product) {
-      return null;
+      throw new Error("Product not found");
     }
 
     return product;
