@@ -1,6 +1,6 @@
 "use client";
 
-import { trpc } from "@/app/_trpc/client";
+import { createCategory } from "@/actions/categories/create-category";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,22 +21,22 @@ const CreateCategory = () => {
   const { toast } = useToast();
   const router = useRouter();
 
-  const { mutate: createItem, isLoading } = trpc.createCategory.useMutation({
-    onSuccess: () => {
-      console.log("Inventory item created successfully");
-      toast({
-        title: "Inventory item created successfully",
-      });
-      router.push("/dashboard/categories");
-    },
-  });
+  // const { mutate: createItem, isLoading } = trpc.createCategory.useMutation({
+  //   onSuccess: () => {
+  //     console.log("Inventory item created successfully");
+  //     toast({
+  //       title: "Inventory item created successfully",
+  //     });
+  //     router.push("/dashboard/categories");
+  //   },
+  // });
 
   const form = useForm<z.infer<typeof categorySchema>>({
     resolver: zodResolver(categorySchema),
   });
 
   function onSubmit(values: z.infer<typeof categorySchema>) {
-    createItem(values);
+    createCategory(values);
   }
 
   return (
@@ -44,9 +44,7 @@ const CreateCategory = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="flex justify-between">
           <p>New Category</p>
-          <Button disabled={isLoading} type="submit">
-            Save Changes
-          </Button>
+          <Button type="submit">Save Changes</Button>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-5  h-full w-2/3 ">

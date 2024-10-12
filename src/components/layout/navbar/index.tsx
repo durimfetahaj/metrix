@@ -26,7 +26,7 @@ const Navbar = ({
       <nav className="h-20 w-full border-b dark:border-zinc-700 backdrop-blur-lg transition-all bg-background">
         <div className=" container h-full w-full flex items-center justify-between px-5">
           <p>Metrix.</p>
-          <DashboardNavbar role={role} />
+          <DashboardNavbar />
           <div>
             <UserMenu />
           </div>

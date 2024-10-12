@@ -32,7 +32,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 
 interface ProductFormProps {
-  initialData: Product | null;
+  initialData: Product | null | undefined;
   categories: Category[];
 }
 
