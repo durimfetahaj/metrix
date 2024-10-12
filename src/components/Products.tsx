@@ -1,5 +1,4 @@
 import { getProducts } from "@/actions/products/get-products";
-import { trpc } from "@/app/_trpc/client";
 import { Loader2 } from "lucide-react";
 import React from "react";
 
@@ -19,24 +18,9 @@ export const Products: React.FC<ProductsProps> = async ({ searchParams }) => {
   // );
 
   if (q && products && !products.length)
-    return <div>No products matched the search: "{q}"</div>;
+    return <div>No products matched the search: {q}</div>;
 
-  if (q)
-    return (
-      <div>
-        Filtered Products:{" "}
-        {products?.map((product) => (
-          <div>{product.name}</div>
-        ))}
-      </div>
-    );
+  if (q) return <div>Filtered Products:</div>;
 
-  return (
-    <div>
-      All products:
-      {products?.map((product) => (
-        <div>{product.name}</div>
-      ))}
-    </div>
-  );
+  return <div>All products:</div>;
 };

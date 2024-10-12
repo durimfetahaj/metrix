@@ -120,7 +120,7 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
                     <SelectContent>
                       <SelectGroup>
                         {categories?.map((category) => (
-                          <SelectItem value={category.id}>
+                          <SelectItem key={category.id} value={category.id}>
                             {category.name}
                           </SelectItem>
                         ))}
