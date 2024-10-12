@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { Icons } from "../Icons";
 import { Skeleton } from "../ui/skeleton";
@@ -48,24 +46,24 @@ const ThreeItemGridItem = ({
   );
 };
 
-const ThreeItemGrid = () => {
-  // const { data: products, isLoading } = trpc.getThreeProducts.useQuery();
+const ThreeItemGrid = async () => {
+  const products = await getThreeProducts();
 
-  const products = [{}];
-  const isLoading = false;
+  if (!products.length || products.length < 3)
+    return (
+      <div className="mt-16 flex flex-col items-center gap-2">
+        <Icons.ghost className="h-8 w-8 text-zinc-800" />
+        <h3 className="font-semibold text-xl">Pretty empty around here</h3>
+        <p>Inventory can only be updated inside dashboard</p>
+      </div>
+    );
 
-  return products?.length !== 0 && products?.length >= 3 ? (
+  return (
     <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 w-full ">
       <ThreeItemGridItem size="full" item={products[0]} priority={true} />
       <ThreeItemGridItem size="half" item={products[1]} priority={true} />
       <ThreeItemGridItem size="half" item={products[2]} />
     </section>
-  ) : (
-    <div className="mt-16 flex flex-col items-center gap-2">
-      <Icons.ghost className="h-8 w-8 text-zinc-800" />
-      <h3 className="font-semibold text-xl">Pretty empty around here</h3>
-      <p>Inventory can only be updated inside dashboard</p>
-    </div>
   );
 };
 
