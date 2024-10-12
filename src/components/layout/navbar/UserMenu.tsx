@@ -14,8 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-
-import UserAvatar from "./UserAvatar";
+import { UserAvatar } from "./UserAvatar";
 
 const UserMenu = ({ isDashboard = false }: { isDashboard?: boolean }) => {
   const { getPermission } = getKindeServerSession();
