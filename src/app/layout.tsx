@@ -24,7 +24,7 @@ export default function RootLayout({
         className={cn("min-h-screen font-sans antialiased", inter.className)}
       >
         <Toaster />
-        <main className="bg-neutral-900">{children}</main>
+        <main>{children}</main>
         <SpeedInsights />
       </body>
     </html>
