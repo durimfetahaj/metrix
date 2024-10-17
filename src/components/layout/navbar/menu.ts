@@ -3,10 +3,10 @@ export interface MenuItem {
   url: string;
 }
 
-const menu = [
+export const mainNavLinks = [
   { label: "All", url: "/search" },
-  { label: "Phones", url: "/phones" },
-  { label: "Pc Builds", url: "/pc-builds" },
+  { label: "Phones", url: "/search/phones" },
+  { label: "Laptops", url: "/search/laptops" },
 ];
 
 export const dashboardNavLinks = [
@@ -35,5 +35,3 @@ export const dashboardNavLinks = [
     label: "Settings",
   },
 ];
-
-export default menu;

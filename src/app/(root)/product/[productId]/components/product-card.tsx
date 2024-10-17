@@ -16,8 +16,8 @@ export const ProductCard = ({ data }: ProductCardProps) => {
   console.log({ images });
 
   return (
-    <div className="mx-auto max-w-screen-2xl bg-black border flex rounded-xl p-12">
-      <div className="w-2/3">
+    <div className="mx-auto max-w-screen-2xl bg-black border flex rounded-xl md:p-12 p-6 flex-col md:flex-row gap-10 items-center h-[800px]">
+      <div className="md:w-2/3">
         <ProductCarousel data={images} />
       </div>
       <div className="ml-auto space-y-6">

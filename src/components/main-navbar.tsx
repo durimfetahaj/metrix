@@ -10,6 +10,8 @@ import {
 import UserMenu from "./layout/navbar/UserMenu";
 import { buttonVariants } from "./ui/button";
 import Search from "./Search";
+import { mainNavLinks } from "./layout/navbar/menu";
+import { MenuItem } from "@/types";
 
 interface MainNavbarProps {
   isHomePage: boolean;
@@ -29,14 +31,19 @@ export function MainNavbar() {
         {/* desktop navbar */}
         <div className="flex w-full items-center ">
           <div className="flex w-1/2 justify-center items-end md:justify-start md:gap-5 md:w-1/3  ">
-            <Link href="/" className="z-40 font-semibold">
+            <Link href="/" className="md:block z-40 font-semibold hidden">
               Metrix.
             </Link>
 
-            <ul className="space-x-5 text-sm text-gray-400">
-              <Link href="/search">All</Link>
-              <Link href="/search/phones">Phones</Link>
-              <Link href="/search/laptops">Laptops</Link>
+            <ul className="hidden md:flex gap-5 text-sm ml-10 text-gray-400">
+              {mainNavLinks.map((item: MenuItem) => (
+                <li
+                  className="text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
+                  key={item.label}
+                >
+                  <Link href={item.url}>{item.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="hidden md:flex md:w-1/3 ">

@@ -3,11 +3,11 @@ import React from "react";
 import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import menu from "./menu";
 import { Icons } from "@/components/Icons";
 import { Dialog, Transition } from "@headlessui/react";
 import Search from "@/components/Search";
 import { MenuItem } from "@/types";
+import { mainNavLinks } from "./menu";
 
 export default function MobileMenu() {
   const pathname = usePathname();
@@ -71,9 +71,14 @@ export default function MobileMenu() {
                 <div className="mb-4 w-full">
                   <Search />
                 </div>
-                {menu.length ? (
+                {mainNavLinks.length ? (
                   <ul className="flex w-full flex-col">
-                    {menu.map((item: MenuItem) => (
+                    <li className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white">
+                      <Link href="/" onClick={closeMobileMenu}>
+                        Home
+                      </Link>
+                    </li>
+                    {mainNavLinks.map((item: MenuItem) => (
                       <li
                         className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
                         key={item.label}
