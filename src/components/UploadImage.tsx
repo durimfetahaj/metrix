@@ -93,6 +93,9 @@ const UploadImage: FC<UploadImageProps> = ({
         setIsUploading(true);
         const progressInterval = startSimulatedProgress();
 
+        console.log({ acceptedFile });
+        console.log({ startUpload });
+
         const res = await startUpload(acceptedFile);
 
         console.log({ res });
