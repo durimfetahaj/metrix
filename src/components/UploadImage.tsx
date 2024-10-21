@@ -95,6 +95,8 @@ const UploadImage: FC<UploadImageProps> = ({
 
         const res = await startUpload(acceptedFile);
 
+        console.log({ res });
+
         if (!res) {
           return toast({
             title: "Something went wrong",
