@@ -85,8 +85,8 @@ const UploadImage: FC<UploadImageProps> = ({
 
           <UploadButton
             className={cn(
-              "mt-4 ut-button:bg-primary ut-button:ut-uploading:bg-primary/50 ut-button:ut-readying:bg-green-500",
-              size === "lg" ? "" : "ut-button:w-[90px]"
+              "mt-4 ut-button:text-primary-foreground ut-button:bg-primary ut-button:ut-uploading:bg-primary/50 ut-button:ut-readying:bg-green-500",
+              size === "lg" ? "" : "ut-button:w-[95px]"
             )}
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
