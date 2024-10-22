@@ -38,19 +38,22 @@ interface ProductFormProps {
 }
 
 const ProductForm = ({ initialData, categories }: ProductFormProps) => {
-  const [imagesUploaded, setImagesUploaded] = useState<any[]>([]);
+  const [imagesUploaded, setImagesUploaded] = useState<any[]>(
+    initialData?.images.length ? initialData?.images : []
+  );
   const { toast } = useToast();
   const router = useRouter();
-  const title = initialData ? "Edit Category" : "Create Category";
+  const title = initialData ? "Edit Product" : "Create Product";
   const action = initialData ? "Save Changes" : "Create";
   const toastMessage = initialData
-    ? "Category updated successfully"
-    : "Category created successfully";
+    ? "Product updated successfully"
+    : "Product created successfully";
 
   const form = useForm<z.infer<typeof InventoryItem>>({
     resolver: zodResolver(InventoryItem),
     defaultValues: {
       ...initialData,
+      category: initialData?.categoryId || "",
     },
   });
 
@@ -89,7 +92,7 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="flex justify-between">
-          <Heading title="Create Product" />
+          <Heading title={title} />
         </div>
 
         <Separator />
@@ -252,7 +255,7 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
             )}
           </div>
         </div>
-        <Button type="submit">Save Changes</Button>
+        <Button type="submit">{action}</Button>
       </form>
     </Form>
   );
