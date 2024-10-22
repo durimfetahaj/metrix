@@ -36,7 +36,6 @@ interface UploadImageProps
 const UploadImage: FC<UploadImageProps> = ({
   className,
   size,
-  onChange,
   imageSrc,
   setImagesUploaded,
   imagesUploaded,
@@ -94,6 +93,7 @@ const UploadImage: FC<UploadImageProps> = ({
               if (newUrl) {
                 setImagesUploaded((prevUrls) => {
                   form.setValue("images", [...prevUrls, newUrl]);
+                  form.clearErrors("images");
                   return [...prevUrls, newUrl];
                 });
               }
