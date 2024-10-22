@@ -187,11 +187,10 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
             <FormField
               control={form.control}
               name="images"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
                   <FormControl>
                     <UploadImage
-                      onChange={() => alert("hi")}
                       size="lg"
                       imageSrc={imagesUploaded[0] ? imagesUploaded[0] : ""}
                       setImagesUploaded={setImagesUploaded}
@@ -211,11 +210,10 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
                 <FormField
                   control={form.control}
                   name="images"
-                  render={({ field }) => (
+                  render={() => (
                     <FormItem>
                       <FormControl>
                         <UploadImage
-                          onChange={() => alert("hi")}
                           imageSrc={imagesUploaded[1] ? imagesUploaded[1] : ""}
                           setImagesUploaded={setImagesUploaded}
                           imagesUploaded={imagesUploaded}
@@ -236,7 +234,6 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
                       <FormItem>
                         <FormControl>
                           <UploadImage
-                            onChange={() => alert("hi")}
                             imageSrc={
                               imagesUploaded[2] ? imagesUploaded[2] : ""
                             }
