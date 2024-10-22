@@ -143,7 +143,7 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
               control={form.control}
               name="price"
               render={({ field }) => (
-                <FormItem className="">
+                <FormItem>
                   <FormControl>
                     <Input {...field} placeholder="Price" type="number" />
                   </FormControl>
@@ -158,7 +158,7 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} placeholder="Stock" />
                   </FormControl>
 
                   <FormMessage />
