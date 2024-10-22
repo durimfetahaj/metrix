@@ -61,9 +61,8 @@ const UploadImage: FC<UploadImageProps> = ({
           <Image
             alt="product-image-view"
             src={imageSrc}
-            width={200}
-            height={200}
-            className="aspect-auto"
+            fill
+            className={cn(size === "lg" ? "p-10" : "p-5")}
           />
           <Button
             variant="ghost"

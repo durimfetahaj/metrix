@@ -180,7 +180,7 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
               )}
             />
           </div>
-          <div className="flex gap-5">
+          <div className="flex gap-5 justify-end">
             <FormField
               control={form.control}
               name="images"
