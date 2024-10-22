@@ -1,18 +1,20 @@
-import { FC, HTMLAttributes, useRef, useState } from "react";
+"use client";
+
+import Image from "next/image";
+import { FC, HTMLAttributes } from "react";
 import { VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { UploadButton } from "@/lib/uploadthing";
+
 import { Icons } from "./Icons";
-import Dropzone from "react-dropzone";
-import Image from "next/image";
-import { Progress } from "./ui/progress";
-import { useUploadThing } from "@/lib/uploadthing";
+
 import { useToast } from "./ui/use-toast";
 import { Button } from "./ui/button";
 
 const uploadImageVariants = cva("relative rounded-xl border  outline-none", {
   variants: {
     size: {
-      default: "lg:h-40 lg:w-40 px-4 py-7",
+      default: "lg:h-40 lg:w-40 px-4",
       lg: "lg:h-[340px] w-96 px-4 py-10",
     },
   },
@@ -26,6 +28,7 @@ interface UploadImageProps
     VariantProps<typeof uploadImageVariants> {
   imageSrc?: string;
   setImagesUploaded: React.Dispatch<React.SetStateAction<string[]>>;
+  imagesUploaded: string[];
   imageIndexToRm: number;
   form: any;
 }
@@ -36,49 +39,36 @@ const UploadImage: FC<UploadImageProps> = ({
   onChange,
   imageSrc,
   setImagesUploaded,
+  imagesUploaded,
   imageIndexToRm,
   form,
   ...props
 }) => {
-  const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [uploadProgress, setUploadProgress] = useState<number>(0);
-  const { startUpload } = useUploadThing("imageUploader");
   const { toast } = useToast();
 
-  const startSimulatedProgress = () => {
-    setUploadProgress(0);
-
-    const interval = setInterval(() => {
-      setUploadProgress((prevProgress) => {
-        if (prevProgress >= 95) {
-          clearInterval(interval);
-          return prevProgress;
-        }
-        return prevProgress + 5;
-      });
-    }, 500);
-
-    return interval;
+  const handleDeleteImage = () => {
+    setImagesUploaded((prevUrls) => {
+      const updatedUrls = [...prevUrls];
+      updatedUrls.splice(imageIndexToRm, 1);
+      return updatedUrls;
+    });
   };
 
-  if (imageSrc) {
+  if (imageSrc && imageSrc !== "") {
     return (
       <div className={cn(uploadImageVariants({ size, className }), "relative")}>
-        <div className="h-full flex items-center justify-center overflow-hidden">
-          <Image alt="" src={imageSrc} width={200} height={100} />
+        <div className="h-full flex items-center justify-center overflow-hidden p-2">
+          <Image
+            alt="product-image-view"
+            src={imageSrc}
+            width={200}
+            height={200}
+            className="aspect-auto"
+          />
           <Button
             variant="ghost"
             className="absolute top-1 right-0 hover:bg-transparent"
-            onClick={() => {
-              setImagesUploaded((prevUrls) => {
-                const updatedUrls = [...prevUrls];
-                updatedUrls[imageIndexToRm] = "";
-                form.setValue("images", updatedUrls);
-                return updatedUrls;
-              });
-              setUploadProgress(0);
-              setIsUploading(false);
-            }}
+            onClick={handleDeleteImage}
           >
             <Icons.trash />
           </Button>
@@ -88,86 +78,51 @@ const UploadImage: FC<UploadImageProps> = ({
   }
 
   return (
-    <Dropzone
-      onDrop={async (acceptedFile: any) => {
-        setIsUploading(true);
-        const progressInterval = startSimulatedProgress();
+    <div className={cn(uploadImageVariants({ size, className }))} {...props}>
+      <div className="h-full w-full flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center">
+          <Icons.uploadDummy className={cn(size === "lg" ? "h-12" : "h-6")} />
 
-        console.log({ acceptedFile });
-        console.log({ startUpload });
-
-        const res = await startUpload(acceptedFile);
-
-        console.log({ res });
-
-        if (!res) {
-          return toast({
-            title: "Something went wrong",
-            description: "Please try again later",
-            variant: "destructive",
-          });
-        }
-
-        const [fileResponse] = res;
-
-        const newUrl = fileResponse?.url;
-
-        if (!newUrl) {
-          return toast({
-            title: "Something went wrong",
-            description: "Please try again later",
-            variant: "destructive",
-          });
-        }
-
-        console.log("newUrl", newUrl);
-
-        clearInterval(progressInterval);
-        setUploadProgress(100);
-        setImagesUploaded((prevUrls) => {
-          form.setValue("images", [...prevUrls, newUrl]);
-          return [...prevUrls, newUrl];
-        });
-      }}
-    >
-      {({ getRootProps, getInputProps, acceptedFiles }) => (
-        <div
-          className={cn(uploadImageVariants({ size, className }))}
-          {...getRootProps()}
-          {...props}
-        >
-          <div className="h-full w-full cursor-pointer flex flex-col items-center justify-center">
-            <Icons.uploadDummy
-              className={cn(size === "lg" ? "h-12 mb-6" : "h-6 mb-3")}
-            />
-
-            <div className="flex gap-3">
-              <Icons.uploadCloud />
-              <p className="text-sm text-brand-primary-100">Upload Image</p>
-            </div>
-            {size === "lg" && (
-              <p className="text-brand-black-30 text-sm text-center mt-2.5">
-                Upload a cover image for your product. File Format {""}
-                <span className="text-brand-black-90">jpeg, png</span> {""}
-                Recommened Size{" "}
-                <span className="text-brand-black-90">4MB max.</span>
-              </p>
+          <UploadButton
+            className={cn(
+              "mt-4 ut-button:bg-primary ut-button:ut-uploading:bg-primary/50 ut-button:ut-readying:bg-green-500",
+              size === "lg" ? "" : "ut-button:w-[90px]"
             )}
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+              const newUrl = res[0].url;
 
-            {isUploading ? (
-              <div className="w-full mt-5 max-w-xs mx-auto">
-                <Progress
-                  value={uploadProgress}
-                  className="h-1 w-full bg-zinc-200"
-                />
-              </div>
-            ) : null}
-          </div>
+              if (newUrl) {
+                setImagesUploaded((prevUrls) => {
+                  form.setValue("images", [...prevUrls, newUrl]);
+                  return [...prevUrls, newUrl];
+                });
+              }
 
-          <input {...getInputProps()} />
+              toast({
+                title: "Image uploaded successfully",
+              });
+            }}
+            onUploadError={(error: Error) => {
+              toast({
+                title: "Failed to upload file",
+                description: "Please try again later",
+                variant: "destructive",
+              });
+              console.error("Error while uploading image", error);
+            }}
+          />
         </div>
-      )}
-    </Dropzone>
+        {size === "lg" && (
+          <p className="text-brand-black-30 text-sm text-center mt-2.5">
+            Upload a cover image for your product. File Format {""}
+            <span className="text-brand-black-90">jpeg, png</span> {""}
+            Recommened Size{" "}
+            <span className="text-brand-black-90">4MB max.</span>
+          </p>
+        )}
+      </div>
+    </div>
   );
 };
 

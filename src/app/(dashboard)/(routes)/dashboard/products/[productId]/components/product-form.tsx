@@ -47,8 +47,6 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
     ? "Category updated successfully"
     : "Category created successfully";
 
-  console.log({ initialData });
-
   const form = useForm<z.infer<typeof InventoryItem>>({
     resolver: zodResolver(InventoryItem),
     defaultValues: {
@@ -57,7 +55,6 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
   });
 
   function onSubmit(values: z.infer<typeof InventoryItem>) {
-    console.log({ values });
     const data = {
       ...values,
       images: imagesUploaded,
@@ -86,8 +83,6 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
           console.error(err);
         });
     }
-
-    // createItem(data);
   }
 
   return (
@@ -197,6 +192,7 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
                       size="lg"
                       imageSrc={imagesUploaded[0] ? imagesUploaded[0] : ""}
                       setImagesUploaded={setImagesUploaded}
+                      imagesUploaded={imagesUploaded}
                       imageIndexToRm={0}
                       form={form}
                     />
@@ -207,27 +203,8 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
               )}
             />
 
-            <div className="flex flex-col gap-5">
-              <FormField
-                control={form.control}
-                name="images"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <UploadImage
-                        onChange={() => alert("hi")}
-                        imageSrc={imagesUploaded[1] ? imagesUploaded[1] : ""}
-                        setImagesUploaded={setImagesUploaded}
-                        imageIndexToRm={1}
-                        form={form}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {imagesUploaded && imagesUploaded.length >= 2 ? (
+            {imagesUploaded?.length >= 1 && (
+              <div className="flex flex-col gap-5">
                 <FormField
                   control={form.control}
                   name="images"
@@ -236,21 +213,43 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
                       <FormControl>
                         <UploadImage
                           onChange={() => alert("hi")}
-                          imageSrc={imagesUploaded[2] ? imagesUploaded[2] : ""}
+                          imageSrc={imagesUploaded[1] ? imagesUploaded[1] : ""}
                           setImagesUploaded={setImagesUploaded}
-                          imageIndexToRm={2}
+                          imagesUploaded={imagesUploaded}
+                          imageIndexToRm={1}
                           form={form}
                         />
                       </FormControl>
-
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-              ) : (
-                <div className="lg:h-40 lg:w-40 px-4 py-7 border border-dashed rounded-md" />
-              )}
-            </div>
+
+                {imagesUploaded?.length >= 2 && (
+                  <FormField
+                    control={form.control}
+                    name="images"
+                    render={() => (
+                      <FormItem>
+                        <FormControl>
+                          <UploadImage
+                            onChange={() => alert("hi")}
+                            imageSrc={
+                              imagesUploaded[2] ? imagesUploaded[2] : ""
+                            }
+                            setImagesUploaded={setImagesUploaded}
+                            imagesUploaded={imagesUploaded}
+                            imageIndexToRm={2}
+                            form={form}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+              </div>
+            )}
           </div>
         </div>
         <Button type="submit">Save Changes</Button>
