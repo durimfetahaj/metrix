@@ -19,7 +19,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({}) => {
 
   if (!dbUser) redirect("/auth-callback?origin=dashboard");
 
-  return <div>Dashboard Page</div>;
+  return <div className="text-center">Dashboard Page</div>;
 };
 
 export default DashboardPage;

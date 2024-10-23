@@ -5,7 +5,7 @@ import { Product } from "@/types";
 
 export const createProduct = async (data: Product) => {
   try {
-    const { name, price, stock, description, images, category } = data;
+    const { name, price, stock, description, images, categoryId } = data;
 
     const newProduct = await db.product.create({
       data: {
@@ -16,7 +16,7 @@ export const createProduct = async (data: Product) => {
         images,
         Category: {
           connect: {
-            id: category,
+            id: categoryId,
           },
         },
       },

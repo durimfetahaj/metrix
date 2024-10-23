@@ -33,7 +33,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 
 interface ProductFormProps {
-  initialData: Product | null | undefined;
+  initialData: Product | undefined;
   categories: Category[];
 }
 
@@ -53,7 +53,7 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
     resolver: zodResolver(InventoryItem),
     defaultValues: {
       ...initialData,
-      category: initialData?.categoryId || "",
+      categoryId: initialData?.categoryId ?? undefined,
     },
   });
 
@@ -64,16 +64,19 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
     };
 
     if (initialData) {
-      updateProduct(initialData)
-        .then((updatedProduct) => {
-          if (updatedProduct?.success) {
-            router.push("/dashboard/products");
-            toast({ title: toastMessage });
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      const updatedData = {
+        ...data,
+        id: initialData.id,
+      };
+
+      updateProduct(updatedData).then((updatedProduct) => {
+        if (updatedProduct?.success) {
+          router.replace("/dashboard/products");
+          toast({ title: toastMessage });
+        } else {
+          console.error(updatedProduct);
+        }
+      });
     } else {
       createProduct(data)
         .then((product) => {
@@ -114,7 +117,7 @@ const ProductForm = ({ initialData, categories }: ProductFormProps) => {
             />
             <FormField
               control={form.control}
-              name="category"
+              name="categoryId"
               render={({ field }) => (
                 <FormItem>
                   <Select
