@@ -19,7 +19,6 @@ export const deleteProduct = async ({ id }: DeleteProductProps) => {
 
     revalidatePath("/dashboard/products");
 
-    // Return a success response
     return { success: true, message: "Product deleted successfully" };
   } catch (error) {
     console.error("Error deleting product by ID:", error);

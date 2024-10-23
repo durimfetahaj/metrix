@@ -2,6 +2,7 @@
 
 import { db } from "@/db";
 import { Product } from "@/types";
+import { revalidatePath } from "next/cache";
 
 export const createProduct = async (data: Product) => {
   try {
@@ -21,6 +22,8 @@ export const createProduct = async (data: Product) => {
         },
       },
     });
+
+    revalidatePath("/dashboard/products");
 
     return { data: newProduct, success: true };
   } catch (error) {
