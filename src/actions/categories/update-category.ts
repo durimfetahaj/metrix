@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/db";
+import { revalidatePath } from "next/cache";
 
 interface UpdateCategoryProps {
   id: string;
@@ -18,6 +19,8 @@ export const updateCategory = async ({ id, name }: UpdateCategoryProps) => {
       // If the category is not found, return a failure response
       return { success: false, error: "Category not found" };
     }
+
+    revalidatePath("/dashboard/categories");
 
     // Return a success response with the updated category
     return { success: true, category };
