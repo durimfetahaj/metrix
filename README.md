@@ -9,6 +9,7 @@
 - [x] add product page
 - [x] fix upload product image
 - [ ] add zustand and cart store
+- [ ] stripe integration
 - [ ] Add product delete confirmation modal
 - [ ] Add category delete confirmation modal
 - [ ] Add related products
