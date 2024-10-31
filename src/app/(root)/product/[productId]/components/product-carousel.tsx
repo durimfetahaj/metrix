@@ -41,7 +41,7 @@ export const ProductCarousel: FC<ProductCarouselProps> = ({ data }) => {
               <img
                 src={image}
                 alt={`Product ${index + 1}`}
-                className="object-cover w-full h-full"
+                className="object-contain w-full h-full"
               />
             </CarouselItem>
           ))}
