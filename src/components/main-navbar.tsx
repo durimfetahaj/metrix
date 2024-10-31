@@ -38,7 +38,7 @@ export function MainNavbar() {
             <ul className="hidden md:flex gap-5 text-sm ml-10 text-gray-400">
               {mainNavLinks.map((item: MenuItem) => (
                 <li
-                  className="text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
+                  className="text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
                   key={item.label}
                 >
                   <Link href={item.url}>{item.label}</Link>
