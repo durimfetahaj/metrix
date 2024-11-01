@@ -1,16 +1,34 @@
 "use client";
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 import { Icons } from "@/components/Icons";
 import useCart from "@/hooks/use-cart";
 import { CartItem } from "./cart-item";
 import { CurrencyFormatter } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export default function CartModal() {
   const { items, isOpen, openCart, closeCart, totalAmount } = useCart();
+
+  const onCheckout = async () => {
+    const data = { productIds: items.map((item) => item.id) };
+    const response = await fetch("/api/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      window.location.href = data.url;
+    } else {
+      console.error("Checkout failed:", await response.text());
+    }
+  };
 
   return (
     <div>
@@ -78,12 +96,12 @@ export default function CartModal() {
                       <CurrencyFormatter amount={String(totalAmount)} />
                     </div>
                   </div>
-                  <Link
-                    href="/checkout"
+                  <Button
+                    onClick={onCheckout}
                     className="block w-full rounded-full bg-primary hover:cursor-pointer p-3 text-center text-sm  text-primary-foreground font-medium opacity-90 hover:opacity-100"
                   >
                     Proceed to Checkout
-                  </Link>
+                  </Button>
                 </div>
               )}
             </Dialog.Panel>
