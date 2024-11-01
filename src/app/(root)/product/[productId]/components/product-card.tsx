@@ -25,7 +25,7 @@ export const ProductCard = ({ data }: ProductCardProps) => {
         <div className="overflow-hidden max-w-lg break-words line-clamp-5">
           {description}
         </div>
-        <AddToCartButton />
+        <AddToCartButton data={data} />
       </div>
     </div>
   );

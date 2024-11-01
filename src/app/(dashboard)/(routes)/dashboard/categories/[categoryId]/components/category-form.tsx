@@ -31,8 +31,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
   const { toast } = useToast();
   const router = useRouter();
 
-  console.log({ initialData });
-
   const title = initialData ? "Edit Category" : "Create Category";
   const action = initialData ? "Save Changes" : "Create";
   const toastMessage = initialData
@@ -47,8 +45,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
   });
 
   function onSubmit(values: z.infer<typeof categorySchema>) {
-    console.log("on submit", values);
-    console.log({ initialData });
     if (initialData) {
       const updatedValues = {
         id: initialData?.id,

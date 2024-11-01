@@ -13,3 +13,4 @@
 - [ ] Add product delete confirmation modal
 - [ ] Add category delete confirmation modal
 - [ ] Add related products
+- [ ] Make responsive all devices

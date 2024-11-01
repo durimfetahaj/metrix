@@ -1,26 +1,26 @@
 "use client";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Icons } from "../Icons";
+import { Badge } from "@/components/ui/badge";
 
-export default function CartModal({ cart }: any) {
-  const [isOpen, setIsOpen] = useState(false);
+import { Icons } from "@/components/Icons";
+import useCart from "@/hooks/use-cart";
+import { CartItem } from "./cart-item";
 
-  const openCart = () => {
-    setIsOpen(true);
-  };
-  const closeCart = () => {
-    setIsOpen(false);
-  };
+export default function CartModal() {
+  const { items, isOpen, openCart, closeCart } = useCart();
 
   return (
     <div>
       <button
         aria-label="Open cart"
         onClick={openCart}
-        className="flex h-10 w-10 items-center justify-center rounded-md border border-zinc-700"
+        className="flex h-10 w-10 items-center justify-center rounded-md border border-zinc-700 relative"
       >
         <Icons.cart className="h-4 w-4 transition-all ease-in-out hover:scale-110" />
+        {items.length > 0 && (
+          <Badge className="absolute -top-4 -right-2">{items.length}</Badge>
+        )}
       </button>
       <Transition show={isOpen}>
         <Dialog onClose={closeCart} className="relative z-50">
@@ -44,7 +44,7 @@ export default function CartModal({ cart }: any) {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[390px]">
+            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex gap-10 h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[390px]">
               <div className="flex items-center justify-between">
                 <p className="text-lg font-semibold">My Cart</p>
                 <button
@@ -55,7 +55,7 @@ export default function CartModal({ cart }: any) {
                 </button>
               </div>
 
-              {!cart || cart.lines.length === 0 ? (
+              {items.length === 0 ? (
                 <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
                   <Icons.cart className="h-16 w-16 " />
                   <p className="mt-6 text-center text-2xl font-bold">
@@ -63,9 +63,13 @@ export default function CartModal({ cart }: any) {
                   </p>
                 </div>
               ) : (
-                <p>Pofla</p>
+                <ul className="flex-grow overflow-auto py-4">
+                  {items.map((item) => (
+                    <CartItem key={item.id} data={item} />
+                  ))}
+                </ul>
+
                 // <div className="flex h-full flex-col justify-between overflow-hidden p-1">
-                //   <ul className="flex-grow overflow-auto py-4">
                 //     {cart.lines.map((item, i) => {
                 //       const merchandiseSearchParams = {} as MerchandiseSearchParams;
 
