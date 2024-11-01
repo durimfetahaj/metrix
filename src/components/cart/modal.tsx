@@ -93,7 +93,9 @@ export default function CartModal() {
                   <div className="py-4 text-sm text-neutral-500 dark:text-neutral-400">
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
                       <p>Total</p>
-                      <CurrencyFormatter amount={String(totalAmount)} />
+                      <p className="text-right text-base text-black dark:text-white">
+                        <CurrencyFormatter amount={String(totalAmount)} />
+                      </p>
                     </div>
                   </div>
                   <Button
