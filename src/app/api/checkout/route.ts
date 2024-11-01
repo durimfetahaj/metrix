@@ -69,8 +69,8 @@ export async function POST(req: Request) {
     phone_number_collection: {
       enabled: true,
     },
-    success_url: `${process.env.FRONTEND_STORE_URL}/pofla`,
-    cancel_url: `${process.env.FRONTEND_STORE_URL}`,
+    success_url: `${process.env.VERCEL_URL}`,
+    cancel_url: `${process.env.VERCEL_URL}`,
     metadata: {
       //   orderId: order.id,
       orderId: "order-123",
