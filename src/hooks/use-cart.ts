@@ -14,7 +14,11 @@ interface CartStore {
   addItem: (data: Product) => void;
   removeItem: (id: string) => void;
   removeAll: (id: string) => void;
+  totalAmount: number;
 }
+
+const calculateTotalAmount = (items: ProductWithQuantity[]) =>
+  items.reduce((total, item) => total + Number(item.price) * item.quantity, 0);
 
 const useCart = create(
   persist<CartStore>(
@@ -23,36 +27,57 @@ const useCart = create(
       openCart: () => set({ isOpen: true }),
       closeCart: () => set({ isOpen: false }),
       items: [],
+      totalAmount: 0,
       addItem: (data: Product) => {
         const productExists = get().items.find((item) => item.id === data.id);
 
         if (productExists) {
-          const updatedProducts = [
+          const updatedItems = [
             ...get().items.filter((item) => item.id !== data.id),
             { ...productExists, quantity: productExists.quantity + 1 },
           ];
 
-          set({ items: updatedProducts });
+          set({
+            items: updatedItems,
+            totalAmount: calculateTotalAmount(updatedItems),
+          });
         } else {
-          set({ items: [...get().items, { ...data, quantity: 1 }] });
+          const updatedItems = [...get().items, { ...data, quantity: 1 }];
+          set({
+            items: updatedItems,
+            totalAmount: calculateTotalAmount(updatedItems),
+          });
         }
       },
       removeItem: (id: string) => {
         const productExists = get().items.find((item) => item.id === id);
 
         if (productExists && productExists.quantity > 1) {
-          const updatedProducts = [
+          const updatedItems = [
             ...get().items.filter((item) => item.id !== id),
             { ...productExists, quantity: productExists.quantity - 1 },
           ];
 
-          set({ items: updatedProducts });
+          set({
+            items: updatedItems,
+            totalAmount: calculateTotalAmount(updatedItems),
+          });
         } else {
-          set({ items: [...get().items.filter((item) => item.id !== id)] });
+          const filteredItems = [
+            ...get().items.filter((item) => item.id !== id),
+          ];
+          set({
+            items: filteredItems,
+            totalAmount: calculateTotalAmount(filteredItems),
+          });
         }
       },
       removeAll: (id: string) => {
-        set({ items: [...get().items.filter((item) => item.id !== id)] });
+        const filteredItems = [...get().items.filter((item) => item.id !== id)];
+        set({
+          items: filteredItems,
+          totalAmount: calculateTotalAmount(filteredItems),
+        });
       },
     }),
     { name: "cart-storage", storage: createJSONStorage(() => localStorage) }
