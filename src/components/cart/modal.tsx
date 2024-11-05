@@ -8,12 +8,23 @@ import useCart from "@/hooks/use-cart";
 import { CartItem } from "./cart-item";
 import { CurrencyFormatter } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Product } from "@prisma/client";
+
+interface ProductWithQuantity extends Product {
+  quantity: number;
+}
 
 export default function CartModal() {
   const { items, isOpen, openCart, closeCart, totalAmount } = useCart();
 
   const onCheckout = async () => {
-    const data = { productIds: items.map((item) => item.id) };
+    const data = {
+      orderItems: items.map((item: ProductWithQuantity) => ({
+        id: item.id,
+        quantity: item.quantity,
+      })),
+    };
+
     const response = await fetch("/api/checkout", {
       method: "POST",
       headers: {

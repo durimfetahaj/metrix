@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 import { stripe } from "@/lib/stripe";
 import { db } from "@/db";
+import { Product } from "@prisma/client";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -10,16 +11,22 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
+interface ProductWithQuantity extends Product {
+  quantity: number;
+}
+
 export async function OPTIONS() {
   return NextResponse.json({}, { headers: corsHeaders });
 }
 
 export async function POST(req: Request) {
-  const { productIds } = await req.json();
+  const { orderItems } = await req.json();
 
-  if (!productIds || productIds.length === 0) {
+  if (!orderItems || orderItems.length === 0) {
     return new NextResponse("Product ids are required", { status: 400 });
   }
+
+  const productIds = orderItems.map((item: ProductWithQuantity) => item.id);
 
   const products = await db.product.findMany({
     where: {
@@ -32,8 +39,12 @@ export async function POST(req: Request) {
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
   products.forEach((product) => {
+    const productQuantity = orderItems.find(
+      (order: ProductWithQuantity) => order.id === product.id
+    ).quantity;
+
     line_items.push({
-      quantity: 1,
+      quantity: productQuantity,
       price_data: {
         currency: "EUR",
         product_data: {
@@ -44,22 +55,25 @@ export async function POST(req: Request) {
     });
   });
 
-  console.log({ line_items });
-
-  //   const order = await db.order.create({
-  //     data: {
-  //       isPaid: false,
-  //       orderItems: {
-  //         create: productIds.map((productId: string) => ({
-  //           product: {
-  //             connect: {
-  //               id: productId,
-  //             },
-  //           },
-  //         })),
-  //       },
-  //     },
-  //   });
+  const order = await db.order.create({
+    data: {
+      isPaid: false,
+      orderItems: {
+        create: orderItems.map((item: ProductWithQuantity) => {
+          const product = products.find((p) => p.id === item.id);
+          return {
+            product: {
+              connect: {
+                id: item.id,
+              },
+            },
+            quantity: item.quantity,
+            price: product?.price,
+          };
+        }),
+      },
+    },
+  });
 
   const session = await stripe.checkout.sessions.create({
     line_items,
@@ -71,8 +85,7 @@ export async function POST(req: Request) {
     success_url: `${process.env.FRONTEND_STORE_URL}`,
     cancel_url: `${process.env.FRONTEND_STORE_URL}`,
     metadata: {
-      //   orderId: order.id,
-      orderId: "order-123",
+      orderId: order.id,
     },
   });
 

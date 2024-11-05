@@ -20,18 +20,19 @@ model User {
 }
 
 model Product {
-  id          String    @id @default(cuid())
+  id          String      @id @default(cuid())
   description String
   name        String
   images      String[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   price       String
   stock       String
   userId      String?
   categoryId  String?
-  Category    Category? @relation(fields: [categoryId], references: [id])
-  user        User?     @relation(fields: [userId], references: [id])
+  orderItems  OrderItem[]
+  Category    Category?   @relation(fields: [categoryId], references: [id])
+  user        User?       @relation(fields: [userId], references: [id])
 }
 
 model Category {
@@ -40,4 +41,24 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   products  Product[]
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  address    String      @default("")
+  isPaid     Boolean     @default(false)
+  phone      String      @default("")
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     String
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
 }
