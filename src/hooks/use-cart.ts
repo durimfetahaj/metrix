@@ -15,6 +15,7 @@ interface CartStore {
   removeItem: (id: string) => void;
   removeAll: (id: string) => void;
   totalAmount: number;
+  resetStore: () => void;
 }
 
 const calculateTotalAmount = (items: ProductWithQuantity[]) =>
@@ -79,6 +80,7 @@ const useCart = create(
           totalAmount: calculateTotalAmount(filteredItems),
         });
       },
+      resetStore: () => set({ isOpen: false, items: [], totalAmount: 0 }),
     }),
     { name: "cart-storage", storage: createJSONStorage(() => localStorage) }
   )

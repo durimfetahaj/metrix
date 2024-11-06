@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Badge } from "@/components/ui/badge";
 
@@ -9,13 +9,29 @@ import { CartItem } from "./cart-item";
 import { CurrencyFormatter } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Product } from "@prisma/client";
+import { useSearchParams } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 interface ProductWithQuantity extends Product {
   quantity: number;
 }
 
 export default function CartModal() {
-  const { items, isOpen, openCart, closeCart, totalAmount } = useCart();
+  const searchParams = useSearchParams();
+  const { toast } = useToast();
+  const { items, isOpen, openCart, closeCart, totalAmount, resetStore } =
+    useCart();
+
+  useEffect(() => {
+    if (searchParams.get("success")) {
+      toast({ title: "Payment completed successfully." });
+      resetStore();
+    }
+
+    if (searchParams.get("canceled")) {
+      toast({ title: "Something went wrong.", variant: "destructive" });
+    }
+  }, [searchParams, resetStore]);
 
   const onCheckout = async () => {
     const data = {

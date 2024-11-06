@@ -82,8 +82,8 @@ export async function POST(req: Request) {
     phone_number_collection: {
       enabled: true,
     },
-    success_url: `${process.env.FRONTEND_STORE_URL}`,
-    cancel_url: `${process.env.FRONTEND_STORE_URL}`,
+    success_url: `${process.env.FRONTEND_STORE_URL}/?success=1`,
+    cancel_url: `${process.env.FRONTEND_STORE_URL}/?canceled=1`,
     metadata: {
       orderId: order.id,
     },
