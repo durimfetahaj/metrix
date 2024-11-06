@@ -10,7 +10,7 @@
 - [x] fix upload product image
 - [x] add zustand and cart store
 - [x] stripe integration
-- [ ] add orders page
+- [x] add orders page
 - [ ] Add product delete confirmation modal
 - [ ] Add category delete confirmation modal
 - [ ] Add related products

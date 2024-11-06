@@ -8,6 +8,10 @@ export const dashboardNavLinks = [
     label: "Products",
   },
   {
+    url: "/dashboard/orders",
+    label: "Orders",
+  },
+  {
     url: "/dashboard/categories",
     label: "Categories",
   },
