@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Category } from "@prisma/client";
 import { CategoryColumn, columns } from "./columns";
-import { Separator } from "@/components/ui/separator";
 
 interface CategoriesClientProps {
   data: Category[];
