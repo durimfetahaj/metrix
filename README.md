@@ -8,8 +8,9 @@
 - [x] fix three products not showing in homepage & carousel
 - [x] add product page
 - [x] fix upload product image
-- [ ] add zustand and cart store
-- [ ] stripe integration
+- [x] add zustand and cart store
+- [x] stripe integration
+- [ ] add orders page
 - [ ] Add product delete confirmation modal
 - [ ] Add category delete confirmation modal
 - [ ] Add related products
