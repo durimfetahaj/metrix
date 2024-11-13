@@ -16,3 +16,4 @@
 - [ ] Add related products
 - [ ] Add dashboard charts page
 - [ ] Make responsive all devices
+- [ ] Make redirect where user was before logging in
