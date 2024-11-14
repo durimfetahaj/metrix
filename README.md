@@ -11,6 +11,9 @@
 - [x] add zustand and cart store
 - [x] stripe integration
 - [x] add orders page
+- [x] add nav items pages
+- [ ] Fix Server Error
+      TypeError: Cannot read properties of null (reading 'useContext')
 - [ ] Add product delete confirmation modal
 - [ ] Add category delete confirmation modal
 - [ ] Add related products

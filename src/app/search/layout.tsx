@@ -1,4 +1,6 @@
+import Footer from "@/components/layout/footer";
 import MainNavbar from "@/components/main-navbar";
+import Collections from "./components/collections";
 
 export default function SearchLayout({
   children,
@@ -6,11 +8,14 @@ export default function SearchLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section>
-      {/* Include shared UI here e.g. a header or sidebar */}
+    <div className="h-screen flex flex-col justify-between ">
       <MainNavbar />
 
-      {children}
-    </section>
+      <div className="container mx-auto min-h-screen flex gap-10">
+        <Collections />
+        {children}
+      </div>
+      <Footer />
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import { getCategories } from "@/actions/get-categories";
+import { getCategories } from "@/actions/categories/get-categories";
 import { CategoriesClient } from "./components/client";
 
 const CategoriesPage = async () => {

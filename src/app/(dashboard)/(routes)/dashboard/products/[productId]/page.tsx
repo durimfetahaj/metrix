@@ -1,4 +1,4 @@
-import { getCategories } from "@/actions/get-categories";
+import { getCategories } from "@/actions/categories/get-categories";
 import ProductForm from "./components/product-form";
 import { getProductById } from "@/actions/products/get-product-by-id";
 

@@ -1,6 +1,8 @@
-import { getProducts } from "@/actions/products/get-products";
-import { Loader2 } from "lucide-react";
 import React from "react";
+import Grid from "@/components/ui/grid";
+
+import { getProducts } from "@/actions/products/get-products";
+import { CollectionItem } from "@/app/search/components/collection-item";
 
 interface ProductsProps {
   searchParams: {
@@ -13,14 +15,23 @@ export const Products: React.FC<ProductsProps> = async ({ searchParams }) => {
 
   const products = await getProducts({ q });
 
-  // const { data: products, isLoading } = trpc.getProducts.useQuery(
-  //   { q: q || undefined } // Pass search term or undefined if it's empty
-  // );
-
   if (q && products && !products.length)
     return <div>No products matched the search: {q}</div>;
 
-  if (q) return <div>Filtered Products:</div>;
+  if (q)
+    return (
+      <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {products.map((product) => (
+          <CollectionItem key={product.id} item={product} />
+        ))}
+      </Grid>
+    );
 
-  return <div>All products:</div>;
+  return (
+    <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      {products.map((product) => (
+        <CollectionItem key={product.id} item={product} />
+      ))}
+    </Grid>
+  );
 };
