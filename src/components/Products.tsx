@@ -18,8 +18,8 @@ export const Products: React.FC<ProductsProps> = async ({ searchParams }) => {
   if (q && products && !products.length)
     return (
       <div>
-        There are no products that match:{" "}
-        <span className="font-bold text-wrap">"{q}"</span>
+        There are no products that match:
+        <span className="font-bold text-wrap">{q}</span>
       </div>
     );
 
