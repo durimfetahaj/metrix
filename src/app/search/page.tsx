@@ -9,6 +9,7 @@ interface SearchPageProps {
 }
 
 const SearchPage: React.FC<SearchPageProps> = ({ searchParams }) => {
+  console.log({ searchParams });
   return (
     <div>
       <Products searchParams={searchParams} />

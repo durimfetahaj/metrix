@@ -16,7 +16,12 @@ export const Products: React.FC<ProductsProps> = async ({ searchParams }) => {
   const products = await getProducts({ q });
 
   if (q && products && !products.length)
-    return <div>No products matched the search: {q}</div>;
+    return (
+      <div>
+        There are no products that match:{" "}
+        <span className="font-bold text-wrap">"{q}"</span>
+      </div>
+    );
 
   if (q)
     return (

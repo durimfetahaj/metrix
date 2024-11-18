@@ -21,7 +21,7 @@ export const CollectionItem = ({ item }: Props) => {
           src={item.images[0]}
           width={100}
           height={100}
-          sizes="(min-width: 768px) 33vw, 100vw"
+          sizes="md:(min-width: 768px) 33vw, 100vw"
           label={{ title: item.name, amount: item.price }}
         />
       </Link>

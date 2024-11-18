@@ -1,6 +1,7 @@
 import MainNavbar from "@/components/main-navbar";
 import { ProductCard } from "./components/product-card";
 import { getProductById } from "@/actions/products/get-product-by-id";
+import Footer from "@/components/layout/footer";
 
 interface ProductPageProps {
   params: {
@@ -13,14 +14,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
 
   const product = await getProductById({ id: productId });
 
-  return (
-    <div>
-      <MainNavbar />
-      <div className="container">
-        <ProductCard data={product} />
-      </div>
-    </div>
-  );
+  return <ProductCard data={product} />;
 };
 
 export default ProductPage;

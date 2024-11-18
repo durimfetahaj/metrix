@@ -33,7 +33,7 @@ export const ProductCarousel: FC<ProductCarouselProps> = ({ data }) => {
   }, [api]);
 
   return (
-    <div className="mx-20 max-w-md">
+    <div className="mx-12 md:mx-20 max-w-md">
       <Carousel setApi={setApi} className="w-full max-w-md">
         <CarouselContent>
           {data.map((image, index) => (

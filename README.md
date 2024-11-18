@@ -12,11 +12,11 @@
 - [x] stripe integration
 - [x] add orders page
 - [x] add nav items pages
+- [ ] Make responsive all devices
 - [ ] Fix Server Error
       TypeError: Cannot read properties of null (reading 'useContext')
 - [ ] Add product delete confirmation modal
 - [ ] Add category delete confirmation modal
 - [ ] Add related products
 - [ ] Add dashboard charts page
-- [ ] Make responsive all devices
 - [ ] Make redirect where user was before logging in

@@ -14,12 +14,12 @@ export default function Footer() {
   return (
     <footer
       className={cn(
-        "text-sm text-neutral-500 dark:text-neutral-400",
+        "text-sm text-neutral-500 dark:text-neutral-400 bg-red-500",
         isDashboard ? "hidden" : "block"
       )}
     >
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6   px-6 py-12 text-sm md:flex-row md:gap-12 md:px-4 min-[1320px]:px-0">
-        <FooterMenu />
+        {/* <FooterMenu /> */}
       </div>
       <div className="border-t py-6 text-sm border-neutral-700">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-1 px-4 md:flex-row md:gap-0 md:px-4 min-[1320px]:px-0">

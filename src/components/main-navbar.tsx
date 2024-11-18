@@ -29,8 +29,8 @@ export function MainNavbar() {
         </div>
 
         {/* desktop navbar */}
-        <div className="flex w-full items-center ">
-          <div className="flex w-1/2 justify-center items-end md:justify-start md:gap-5 md:w-1/3  ">
+        <div className="flex w-full items-center">
+          <div className="flex w-1/2 justify-center items-end md:justify-start md:gap-5 lg:w-1/3">
             <Link href="/" className="md:block z-40 font-semibold hidden">
               Metrix.
             </Link>
