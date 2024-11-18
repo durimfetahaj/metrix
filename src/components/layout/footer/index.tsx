@@ -14,7 +14,7 @@ export default function Footer() {
   return (
     <footer
       className={cn(
-        "text-sm text-neutral-500 dark:text-neutral-400 bg-red-500",
+        "text-sm text-neutral-500 dark:text-neutral-400 ",
         isDashboard ? "hidden" : "block"
       )}
     >
